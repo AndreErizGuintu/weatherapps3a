@@ -54,8 +54,17 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   uses-material-design: true
+
   assets:
     - .env
+    - assets/storm.gif
+    - assets/rain.gif
+    - assets/sunny.gif
+    - assets/cloudy.gif
+    - assets/night.gif
+    - assets/snow.gif
+    - assets/fog.gif
+    - assets/clear.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
