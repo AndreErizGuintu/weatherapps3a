@@ -9,7 +9,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
-  runApp(const CupertinoApp(debugShowCheckedModeBanner: false, home: MyApp()));
+  runApp(const CupertinoApp(debugShowCheckedModeBanner: false,
+
+      home: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -24,6 +26,10 @@ class _MyAppState extends State<MyApp> {
   bool isDarkMode = false;
 
   // Improved color combinations with better contrast
+  Color get listTileBackgroundColor => isDarkMode
+      ? CupertinoColors.darkBackgroundGray
+      : CupertinoColors.extraLightBackgroundGray;
+
   Color get backgroundColor => isDarkMode
       ? CupertinoColors.black
       : CupertinoColors.extraLightBackgroundGray;
@@ -1445,133 +1451,138 @@ class _MyAppState extends State<MyApp> {
                     ),
                   ),
                 ),
-                CupertinoListSection.insetGrouped(
+                Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
-                  backgroundColor: cardColor,
-                  children: [
-                    // Dark Mode Toggle
-                    CupertinoListTile(
-                      leading: Container(
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          color: isDarkMode
-                              ? CupertinoColors.systemYellow
-                              : CupertinoColors.systemPurple,
-                          borderRadius: BorderRadius.circular(8),
+                  decoration: BoxDecoration(
+                    color: cardColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      // Dark Mode Toggle
+                      CupertinoListTile(
+                        backgroundColor: CupertinoColors.transparent,
+                        leading: Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: isDarkMode
+                                ? CupertinoColors.systemYellow
+                                : CupertinoColors.systemPurple,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Icon(
+                            isDarkMode
+                                ? CupertinoIcons.moon_fill
+                                : CupertinoIcons.sun_max_fill,
+                            color: CupertinoColors.white,
+                            size: 22,
+                          ),
                         ),
-                        child: Icon(
-                          isDarkMode
-                              ? CupertinoIcons.moon_fill
-                              : CupertinoIcons.sun_max_fill,
-                          color: CupertinoColors.white,
-                          size: 22,
+                        title: Text(
+                          "Dark Mode",
+                          style: TextStyle(color: textColor),
                         ),
-                      ),
-                      title: Text(
-                        "Dark Mode",
-                        style: TextStyle(color: textColor),
-                      ),
-                      trailing: CupertinoSwitch(
-                        value: isDarkMode,
-                        onChanged: (value) {
-                          setState(() {
-                            isDarkMode = value;
-                          });
-                        },
-                        activeColor: accentColor,
-                      ),
-                    ),
-
-                    // Icon Color
-                    CupertinoListTile(
-                      leading: Container(
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          color: IconColor,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Icon(
-                          CupertinoIcons.paintbrush,
-                          color: CupertinoColors.white,
-                          size: 22,
+                        trailing: CupertinoSwitch(
+                          value: isDarkMode,
+                          onChanged: (value) {
+                            setState(() {
+                              isDarkMode = value;
+                            });
+                          },
                         ),
                       ),
-                      title: Text(
-                        "Icon Color",
-                        style: TextStyle(color: textColor),
-                      ),
-                      trailing: CupertinoButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: () {
-                          showCupertinoModalPopup(
-                            context: context,
-                            builder: (context) {
-                              return Container(
-                                height: 400,
-                                decoration: BoxDecoration(
-                                  color: cardColor,
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20),
+                      // Icon Color
+                      CupertinoListTile(
+                        backgroundColor: CupertinoColors.transparent,
+                        leading: Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: IconColor,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Icon(
+                            CupertinoIcons.paintbrush,
+                            color: CupertinoColors.white,
+                            size: 22,
+                          ),
+                        ),
+                        title: Text(
+                          "Icon Color",
+                          style: TextStyle(color: textColor),
+                        ),
+                        trailing: CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            showCupertinoModalPopup(
+                              context: context,
+                              builder: (context) {
+                                return Container(
+                                  height: 400,
+                                  decoration: BoxDecoration(
+                                    color: cardColor,
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
+                                    ),
                                   ),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(20),
-                                      child: Text(
-                                        "Choose Icon Color",
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                          color: textColor,
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(20),
+                                        child: Text(
+                                          "Choose Icon Color",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                            color: textColor,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: ListView(
-                                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                                        children: [
-                                          _colorOption(CupertinoColors.systemBlue, "Blue"),
-                                          _colorOption(CupertinoColors.systemGreen, "Green"),
-                                          _colorOption(CupertinoColors.systemOrange, "Orange"),
-                                          _colorOption(CupertinoColors.systemPurple, "Purple"),
-                                          _colorOption(CupertinoColors.systemRed, "Red"),
-                                          _colorOption(CupertinoColors.systemYellow, "Yellow"),
-                                          _colorOption(CupertinoColors.systemTeal, "Teal"),
-                                          _colorOption(CupertinoColors.systemPink, "Pink"),
-                                        ],
+                                      Expanded(
+                                        child: ListView(
+                                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                                          children: [
+                                            _colorOption(CupertinoColors.systemBlue, "Blue"),
+                                            _colorOption(CupertinoColors.systemGreen, "Green"),
+                                            _colorOption(CupertinoColors.systemOrange, "Orange"),
+                                            _colorOption(CupertinoColors.systemPurple, "Purple"),
+                                            _colorOption(CupertinoColors.systemRed, "Red"),
+                                            _colorOption(CupertinoColors.systemYellow, "Yellow"),
+                                            _colorOption(CupertinoColors.systemTeal, "Teal"),
+                                            _colorOption(CupertinoColors.systemPink, "Pink"),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  color: IconColor,
+                                  shape: BoxShape.circle,
                                 ),
-                              );
-                            },
-                          );
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                color: IconColor,
-                                shape: BoxShape.circle,
                               ),
-                            ),
-                            const SizedBox(width: 6),
-                            Icon(
-                              CupertinoIcons.chevron_forward,
-                              size: 16,
-                              color: secondaryTextColor,
-                            ),
-                          ],
+                              const SizedBox(width: 6),
+                              Icon(
+                                CupertinoIcons.chevron_forward,
+                                size: 16,
+                                color: secondaryTextColor,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
+                      ),],
+                  ),
                 ),
+
 
                 // TEMPERATURE SECTION
                 Padding(
@@ -1588,11 +1599,12 @@ class _MyAppState extends State<MyApp> {
                 ),
                 CupertinoListSection.insetGrouped(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
-                  backgroundColor: cardColor,
+                  backgroundColor: backgroundColor,
                   children: [
                     CupertinoListTile(
+                      backgroundColor: cardColor,
                       leading: Container(
-                        padding: const EdgeInsets.all(6),
+                        padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
                           color: CupertinoColors.systemRed,
                           borderRadius: BorderRadius.circular(8),
@@ -1689,11 +1701,12 @@ class _MyAppState extends State<MyApp> {
                 ),
                 CupertinoListSection.insetGrouped(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
-                  backgroundColor: cardColor,
+                  backgroundColor: backgroundColor,
                   children: [
                     CupertinoListTile(
+                      backgroundColor: cardColor,
                       leading: Container(
-                        padding: const EdgeInsets.all(6),
+                        padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
                           color: CupertinoColors.systemBlue,
                           borderRadius: BorderRadius.circular(8),
@@ -1714,57 +1727,62 @@ class _MyAppState extends State<MyApp> {
                           showCupertinoDialog(
                             context: context,
                             builder: (context) {
-                              return CupertinoAlertDialog(
-                                title: Text(
-                                  "Change City",
-                                  style: TextStyle(color: textColor),
+                              return CupertinoTheme(
+                                data: CupertinoThemeData(
+                                  brightness: isDarkMode ? Brightness.dark : Brightness.light,
                                 ),
-                                content: Column(
-                                  children: [
-                                    const SizedBox(height: 16),
-                                    CupertinoTextField(
-                                      controller: _location,
-                                      placeholder: "Enter city name",
-                                      placeholderStyle: TextStyle(
-                                        color: secondaryTextColor,
+                                child: CupertinoAlertDialog(
+                                  title: Text(
+                                    "Change City",
+                                    style: TextStyle(color: textColor),
+                                  ),
+                                  content: Column(
+                                    children: [
+                                      const SizedBox(height: 16),
+                                      CupertinoTextField(
+                                        controller: _location,
+                                        placeholder: "Enter city name",
+                                        placeholderStyle: TextStyle(
+                                          color: secondaryTextColor,
+                                        ),
+                                        style: TextStyle(color: textColor),
+                                        decoration: BoxDecoration(
+                                          color: subtleBackgroundColor,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        padding: const EdgeInsets.all(12),
                                       ),
-                                      style: TextStyle(color: textColor),
-                                      decoration: BoxDecoration(
-                                        color: subtleBackgroundColor,
-                                        borderRadius: BorderRadius.circular(10),
+                                    ],
+                                  ),
+                                  actions: [
+                                    // Save button on the left
+                                    CupertinoButton(
+                                      child: const Text('Save'),
+                                      onPressed: () {
+                                        setState(() {
+                                          currentLocation = _location.text.isNotEmpty
+                                              ? _location.text
+                                              : defaultLocation;
+                                        });
+                                        getWeatherData();
+                                        _tabController.index = 0;
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    // Cancel button on the right
+                                    CupertinoButton(
+                                      child: const Text(
+                                        'Cancel',
+                                        style: TextStyle(
+                                          color: CupertinoColors.destructiveRed,
+                                        ),
                                       ),
-                                      padding: const EdgeInsets.all(12),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
                                     ),
                                   ],
                                 ),
-                                actions: [
-                                  // Save button on the left
-                                  CupertinoButton(
-                                    child: const Text('Save'),
-                                    onPressed: () {
-                                      setState(() {
-                                        currentLocation = _location.text.isNotEmpty
-                                            ? _location.text
-                                            : defaultLocation;
-                                      });
-                                      getWeatherData();
-                                      _tabController.index = 0;
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  // Cancel button on the right
-                                  CupertinoButton(
-                                    child: const Text(
-                                      'Cancel',
-                                      style: TextStyle(
-                                        color: CupertinoColors.destructiveRed,
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
                               );
                             },
                           );
@@ -1807,11 +1825,12 @@ class _MyAppState extends State<MyApp> {
                 ),
                 CupertinoListSection.insetGrouped(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
-                  backgroundColor: cardColor,
+                  backgroundColor: backgroundColor,
                   children: [
                     CupertinoListTile(
+                      backgroundColor: cardColor,
                       leading: Container(
-                        padding: const EdgeInsets.all(6),
+                        padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
                           color: CupertinoColors.systemGreen,
                           borderRadius: BorderRadius.circular(8),
