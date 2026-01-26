@@ -851,7 +851,7 @@ class _MyAppState extends State<MyApp> {
 
   Widget _buildWeatherCard(IconData icon, String label, String value, String? unit) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12), // Reduced from 16
       decoration: BoxDecoration(
         color: cardColor,
         borderRadius: BorderRadius.circular(20),
@@ -866,30 +866,39 @@ class _MyAppState extends State<MyApp> {
         ],
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, color: IconColor, size: 28),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              color: secondaryTextColor,
-              fontWeight: FontWeight.w500,
+          Icon(icon, color: IconColor, size: 24), // Reduced from 28
+          const SizedBox(height: 4), // Reduced from 8
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 11,
+                color: secondaryTextColor,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
-          const SizedBox(height: 4),
-          Text(
-            "$value${unit ?? ''}",
-            style: TextStyle(
-              fontSize: 18,
-              color: textColor,
-              fontWeight: FontWeight.w600,
+          const SizedBox(height: 2), // Reduced from 4
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              "$value${unit ?? ''}",
+              style: TextStyle(
+                fontSize: 16, // Reduced from 18
+                color: textColor,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -941,6 +950,7 @@ class _MyAppState extends State<MyApp> {
               CupertinoPageScaffold(
                 backgroundColor: CupertinoColors.transparent,
                 navigationBar: CupertinoNavigationBar(
+
                   backgroundColor: CupertinoColors.transparent,
                   border: null,
                   middle: Text(
@@ -960,7 +970,8 @@ class _MyAppState extends State<MyApp> {
 
                       // City Name and Weather Condition
                       Column(
-                        children: [
+                        children:[
+                          SizedBox(height: 40,),
                           Text(
                             city,
                             style: TextStyle(
@@ -1057,7 +1068,7 @@ class _MyAppState extends State<MyApp> {
                         crossAxisCount: 3,
                         mainAxisSpacing: 15,
                         crossAxisSpacing: 15,
-                        childAspectRatio: 0.9,
+                        childAspectRatio: 0.80,
                         children: [
                           _buildWeatherCard(
                             CupertinoIcons.drop_fill,
